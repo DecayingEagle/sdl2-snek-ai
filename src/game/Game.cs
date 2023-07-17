@@ -1,10 +1,9 @@
 ﻿using System.Numerics;
-using System.Runtime.InteropServices.JavaScript;
 using sdl2_snek_ai;
 using SDL2;
-using sdl2_snek_ai.src.utils;
+using sdl2_snek_ai.utils;
 
-namespace sdl2_snek_ai.src.game;
+namespace sdl2_snek_ai.game;
 
 public class Game
 {
@@ -37,14 +36,10 @@ public class Game
   
   public SDL.SDL_Event e;
     
-  public void Update()
-    {
-      foreach (BoardTile tile in GameBoard)
-      {
-        SDL.SDL_Rect fillRect;
-        
-      }
-    }
+  public void Update(IntPtr renderer)
+  {
+    DrawBoard(renderer);
+  }
 
   public void Draw(IntPtr renderer)
   {
@@ -57,13 +52,21 @@ public class Game
     SDL.SDL_SetRenderDrawColor( renderer, 0x00, 0x00, 0x00, 0xff );
     SDL.SDL_RenderClear(renderer);
 
-    SDL.SDL_Rect fillRect;
+    SDL.SDL_Rect fillRect = new SDL.SDL_Rect();
     fillRect.x = 0;
     fillRect.y = 0;
     fillRect.w = 32;
     fillRect.h = 32;
     SDL.SDL_SetRenderDrawColor( renderer, 0xff, 0x00, 0x00, 0xff );
     SDL.SDL_RenderFillRect(renderer, ref fillRect);
+    
+      
+    for (int i = 0; i < GameBoard.Length; i++)
+    {
+      Utils.SDL_ImmutableRect(0+33*i, 0, 32, 32, ref fillRect);
+      SDL.SDL_SetRenderDrawColor( renderer, 0x50, 0x00, 0x00, 0xff );
+      SDL.SDL_RenderFillRect(renderer, ref fillRect);
+    }
     SDL.SDL_RenderPresent(renderer);
   }
   
@@ -111,7 +114,7 @@ public class Game
             break;
         }
         #endregion MAINOPERATIONHANDLING
-        Update();
+        Update(renderer);
         Draw(renderer);
       }
     }

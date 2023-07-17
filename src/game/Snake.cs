@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
-using sdl2_snek_ai.src.utils;
+using sdl2_snek_ai.utils;
 
-namespace sdl2_snek_ai.src.game;
+namespace sdl2_snek_ai.game;
 
 
 public class Snake

@@ -1,4 +1,4 @@
-﻿namespace sdl2_snek_ai.src.utils;
+﻿namespace sdl2_snek_ai.utils;
 
 // ReSharper disable once InconsistentNaming
 public struct Vector2i

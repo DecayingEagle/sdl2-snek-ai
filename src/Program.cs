@@ -2,8 +2,8 @@
 using System.Numerics;
 using System.Xml;
 using SDL2;
-using sdl2_snek_ai.src.game;
-using sdl2_snek_ai.src.utils;
+using sdl2_snek_ai.game;
+using sdl2_snek_ai.utils;
 
 namespace sdl2_snek_ai;
 

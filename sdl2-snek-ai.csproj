@@ -9,8 +9,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
+
   <ItemGroup>
-    <Folder Include="src\gui\" />
+    <Folder Include="src\ai\" />
   </ItemGroup>
 
 </Project>
