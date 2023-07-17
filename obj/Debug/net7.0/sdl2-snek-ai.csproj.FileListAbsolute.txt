@@ -1,0 +1,14 @@
+F:\sdl2-snek-ai\obj\Debug\net7.0\sdl2-snek-ai.GeneratedMSBuildEditorConfig.editorconfig
+F:\sdl2-snek-ai\obj\Debug\net7.0\sdl2-snek-ai.AssemblyInfoInputs.cache
+F:\sdl2-snek-ai\obj\Debug\net7.0\sdl2-snek-ai.AssemblyInfo.cs
+F:\sdl2-snek-ai\obj\Debug\net7.0\sdl2-snek-ai.csproj.CoreCompileInputs.cache
+F:\sdl2-snek-ai\bin\Debug\net7.0\sdl2-snek-ai.exe
+F:\sdl2-snek-ai\bin\Debug\net7.0\sdl2-snek-ai.deps.json
+F:\sdl2-snek-ai\bin\Debug\net7.0\sdl2-snek-ai.runtimeconfig.json
+F:\sdl2-snek-ai\bin\Debug\net7.0\sdl2-snek-ai.dll
+F:\sdl2-snek-ai\bin\Debug\net7.0\sdl2-snek-ai.pdb
+F:\sdl2-snek-ai\obj\Debug\net7.0\sdl2-snek-ai.dll
+F:\sdl2-snek-ai\obj\Debug\net7.0\refint\sdl2-snek-ai.dll
+F:\sdl2-snek-ai\obj\Debug\net7.0\sdl2-snek-ai.pdb
+F:\sdl2-snek-ai\obj\Debug\net7.0\sdl2-snek-ai.genruntimeconfig.cache
+F:\sdl2-snek-ai\obj\Debug\net7.0\ref\sdl2-snek-ai.dll

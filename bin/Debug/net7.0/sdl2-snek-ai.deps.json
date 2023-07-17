@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "sdl2-snek-ai/1.0.0": {
+        "runtime": {
+          "sdl2-snek-ai.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "sdl2-snek-ai/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
