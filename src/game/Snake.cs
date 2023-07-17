@@ -1,18 +1,24 @@
 ﻿using System.Numerics;
+using sdl2_snek_ai.src.utils;
 
 namespace sdl2_snek_ai.src.game;
 
 
 public class Snake
 {
-  public Snake(Vector2 pos)
+  public Snake(Vector2i pos)
   {
     Pos = pos;
-    BodyStack = new Stack<Vector2>();
+    BodyStack = new Stack<Vector2i>();
     BodyStack.Push(pos);
   }
 
-  public Vector2 Pos { get; set; }
-  public Stack<Vector2> BodyStack { get; set; }
+  public Vector2i Pos { get; set; }
+  public Stack<Vector2i> BodyStack { get; set; }
   public int Lenght { get; set; }
+
+  public void UpdatePos()
+  {
+    // add updating position script that also goes through the stack and pulls last and pushes new unless an apple is eaten
+  }
 }
