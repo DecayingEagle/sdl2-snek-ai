@@ -15,6 +15,8 @@ public class Game
     apple = new Apple(Rng);
     GameBoard = new BoardTile[Program.GameFieldWidth * Program.GameFieldHeight];
     Direction = 0b00;
+    MoveTime = 200; //in ms
+    EventPollTime = 10; //in ms
   }
     
   public int FieldWidth { get; }
@@ -26,6 +28,11 @@ public class Game
   public BoardTile[] GameBoard { get; set; } //gives type of tile in binary
   
   public byte Direction { get; set; }
+  
+  private UInt32 GameTicks { get; set; }
+  public uint MoveTime { get; set; }
+  public uint EventPollTime { get; set; }
+  public Vector2i[] SnakeBody { get; set; }
   
   public enum BoardTile
   {
@@ -58,15 +65,16 @@ public class Game
       default:
         throw new ArgumentOutOfRangeException();
     }
+    snake.UpdatePos(new Vector2i(x, y), snake.Pos, apple, snake.BodyStack);
     snake.Pos = new Vector2i(x, y);
+    
     
     if (Vector2i.Equals(apple.Pos, snake.Pos))
     {
       apple.GenNewPos();
     }
 
-    InitBoard();
-    Draw(renderer);
+    UpdateBoard();
   }
 
   public void Draw(IntPtr renderer)
@@ -149,11 +157,17 @@ public class Game
     {
       InitDraw(renderer);
     }
-      
+    Draw(renderer);
+    
+    uint localLastTimeUpdated = 0;
+    uint localLastTimeEventsPolled = 0;
     bool quit = false;
+    
     while (!quit)
     {
-      while (SDL.SDL_PollEvent(out e) != 0 && e.type != SDL.SDL_EventType.SDL_MOUSEMOTION)
+      GameTicks = SDL.SDL_GetTicks();
+      if (GameTicks - localLastTimeEventsPolled <= EventPollTime) continue;
+      while (SDL.SDL_PollEvent(out e) != 0 && e.type != SDL.SDL_EventType.SDL_MOUSEMOTION && e.type is SDL.SDL_EventType.SDL_QUIT or SDL.SDL_EventType.SDL_KEYDOWN)
       {
         #region MAINOPERATIONHANDLING
         switch (e.type)
@@ -164,22 +178,19 @@ public class Game
           case SDL.SDL_EventType.SDL_KEYDOWN:
             DoKeyDown(e.key);
             break;
-          case SDL.SDL_EventType.SDL_KEYUP:
-            DoKeyUp(e.key);
-            break;
         }
         #endregion MAINOPERATIONHANDLING
-        Update(renderer);
       }
+      
+      if (GameTicks - localLastTimeUpdated <= MoveTime) continue;
+      Update(renderer);
+      Draw(renderer);
+      Console.WriteLine(string.Join(", ", snake.BodyStack.ToArray()));
+      localLastTimeUpdated = SDL.SDL_GetTicks();
     }
     SDL.SDL_DestroyRenderer(renderer);
     SDL.SDL_DestroyWindow(window);
     SDL.SDL_Quit();
-  }
-
-  private void DoKeyUp(SDL.SDL_KeyboardEvent e)
-  {
-    // DO NOTHING FOR NOW
   }
 
   public void DoKeyDown(SDL.SDL_KeyboardEvent e)
@@ -206,11 +217,11 @@ public class Game
 
   public void InitDraw(IntPtr renderer)
   {
-    InitBoard();
+    UpdateBoard();
     DrawBoard(renderer);
   }
 
-  private void InitBoard()
+  private void UpdateBoard()
   {
     for (int j = 0; j < Program.GameFieldHeight; j++) //columns
     {
@@ -218,19 +229,24 @@ public class Game
       {
         if (i == 0 || i == Program.GameFieldWidth - 1 || j == 0 || j == Program.GameFieldHeight - 1)
         {
-          GameBoard[j * Program.GameFieldWidth + i] = BoardTile.WALL;
+          GameBoard[i+j*Program.GameFieldWidth] = BoardTile.WALL;
         } 
         else if (i == snake.Pos.X && j == snake.Pos.Y)
         {
-          GameBoard[j * Program.GameFieldWidth + i] = BoardTile.SNAKE;
+          GameBoard[i+j*Program.GameFieldWidth] = BoardTile.SNAKE;
         } 
         else if (i == apple.Pos.X && j == apple.Pos.Y)
         {
-          GameBoard[j * Program.GameFieldWidth + i] = BoardTile.APPLE;
+          GameBoard[i+j*Program.GameFieldWidth] = BoardTile.APPLE;
         }
         else
         {
           GameBoard[j * Program.GameFieldWidth + i] = BoardTile.NOTHING;
+        }
+
+        foreach (var part in snake.BodyStack)
+        {
+          GameBoard[part.X + part.Y * Program.GameFieldWidth] = BoardTile.SNAKE;
         }
       }
     }

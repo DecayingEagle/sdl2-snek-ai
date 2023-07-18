@@ -10,13 +10,13 @@ namespace sdl2_snek_ai;
 static class Program
 {
 
-  public const int WindowWidth = 1000;
+  public const int WindowWidth = 1200;
   public const int WindowHeight = 800;
-  public const int GameFieldWidth = 30;
-  public const int GameFieldHeight = 20;
-  public const int TileSize = 32;
+  public const int GameFieldWidth = 50;
+  public const int GameFieldHeight = 30;
+  public const int TileSize = 20;
   public const int MarginSize = 1;
-  public static readonly Vector2i SnakeInitPos = new Vector2i(6, 4);
+  public static readonly Vector2i SnakeInitPos = new Vector2i(49, 1);
   
   // Game colors in rgba hex
   /* unused colors for now
