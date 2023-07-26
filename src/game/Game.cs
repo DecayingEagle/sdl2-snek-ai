@@ -65,7 +65,7 @@ public class Game
       default:
         throw new ArgumentOutOfRangeException();
     }
-    snake.UpdatePos(new Vector2i(x, y), snake.Pos, apple, snake.BodyStack);
+    snake.UpdatePos(new Vector2i(x, y), apple, snake.BodyQueue);
     snake.Pos = new Vector2i(x, y);
     
     
@@ -142,7 +142,7 @@ public class Game
       
     if (window == IntPtr.Zero)
     {
-      Console.WriteLine("Window could not be created! SDL Error: %s\n", SDL.SDL_GetError());
+      Console.WriteLine("Window could not be created! SDL Error: {0}", SDL.SDL_GetError());
       return;
     }
 
@@ -151,7 +151,8 @@ public class Game
       
     if (renderer == IntPtr.Zero)
     {
-      Console.WriteLine( "Renderer could not be created! SDL Error: %s\n", SDL.SDL_GetError() );
+      Console.WriteLine( "Renderer could not be created! SDL Error: {0}", SDL.SDL_GetError());
+      return;
     }
     else
     {
@@ -185,7 +186,7 @@ public class Game
       if (GameTicks - localLastTimeUpdated <= MoveTime) continue;
       Update(renderer);
       Draw(renderer);
-      Console.WriteLine(string.Join(", ", snake.BodyStack.ToArray()));
+      Console.WriteLine(string.Join(", ", snake.BodyQueue.ToArray()));
       localLastTimeUpdated = SDL.SDL_GetTicks();
     }
     SDL.SDL_DestroyRenderer(renderer);
@@ -244,7 +245,7 @@ public class Game
           GameBoard[j * Program.GameFieldWidth + i] = BoardTile.NOTHING;
         }
 
-        foreach (var part in snake.BodyStack)
+        foreach (var part in snake.BodyQueue)
         {
           GameBoard[part.X + part.Y * Program.GameFieldWidth] = BoardTile.SNAKE;
         }

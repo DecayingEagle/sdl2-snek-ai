@@ -34,4 +34,9 @@ public struct Vector2i
   {
     return $"({X}, {Y})";
   }
+
+  public static Vector2i Zero()
+  {
+    return new Vector2i(0, 0);
+  }
 }

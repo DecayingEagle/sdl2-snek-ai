@@ -8,16 +8,16 @@ public class Apple
   {
     Rng = rng;
     Pos = new Vector2i(Rng.Next(1, Program.GameFieldWidth-1), Rng.Next(1, Program.GameFieldHeight-1));
-    HasBeenEatenFlag = false;
+    Eaten = false;
   }
   public Vector2i Pos { get; set; }
 
   private Random Rng { get; set; }
-  public bool HasBeenEatenFlag { get; set; }
+  public bool Eaten { get; set; }
 
   public void GenNewPos()
   {
     Pos = new Vector2i(Rng.Next(1, Program.GameFieldWidth-1), Rng.Next(1, Program.GameFieldHeight-1));
-    HasBeenEatenFlag = true;
+    Eaten = true;
   }
 }
