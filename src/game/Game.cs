@@ -1,4 +1,5 @@
-﻿using SDL2;
+﻿using System.Reflection.Metadata;
+using SDL2;
 using sdl2_snek_ai.utils;
 
 namespace sdl2_snek_ai.game;
@@ -17,8 +18,11 @@ public class Game
     Direction = 0b00;
     MoveTime = 200; //in ms
     EventPollTime = 10; //in ms
+    GameOver = false;
   }
-    
+
+  public bool GameOver { get; set; }
+
   public int FieldWidth { get; }
   public int FieldHeight { get; }
   public Random Rng { get; set; }
@@ -74,6 +78,8 @@ public class Game
       apple.GenNewPos();
     }
 
+    if (snake.Pos.X == 0 || snake.Pos.Y == 0 || snake.Pos.X == Program.GameFieldWidth - 1 ||
+        snake.Pos.Y == Program.GameFieldHeight - 1) GameOver = true;
     UpdateBoard();
   }
 
@@ -184,7 +190,10 @@ public class Game
       }
       
       if (GameTicks - localLastTimeUpdated <= MoveTime) continue;
-      Update(renderer);
+      if (!GameOver)
+      {
+        Update(renderer);
+      }
       Draw(renderer);
       Console.WriteLine(string.Join(", ", snake.BodyQueue.ToArray()));
       localLastTimeUpdated = SDL.SDL_GetTicks();
